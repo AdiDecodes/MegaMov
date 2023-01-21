@@ -1,11 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
 url_list = {}
-api_key = os.getenv("API")
+API = "e97f8232ba51a0a2bd9cb53380ebfb71f0555014"
 
 
 def search_movies(query):
@@ -28,7 +25,7 @@ def search_movies(query):
 def get_movie(query):
     movie_details = {}
     movie_page_link = BeautifulSoup(requests.get(
-        f"{url_list[query]}").text, "html.parser")
+        f"{url_list[query]}").text, 'html5lib')
     if movie_page_link:
         title = movie_page_link.find("div", {'class': 'mvic-desc'}).h3.text
         movie_details["title"] = title
@@ -38,7 +35,7 @@ def get_movie(query):
             "a", {'rel': 'noopener', 'data-wpel-link': 'internal'})
         final_links = {}
         for i in links:
-            url = f"https://urlshortx.com/api?api={api_key}&url={i['href']}"
+            url = f"https://urlshortx.com/api?api={API}&url={i['href']}"
             response = requests.get(url)
             link = response.json()
             final_links[f"{i.text}"] = link['shortenedUrl']

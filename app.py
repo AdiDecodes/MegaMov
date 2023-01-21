@@ -6,9 +6,6 @@ import requests
 from queue import Queue
 from io import BytesIO
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 URL = os.getenv("URL")
@@ -18,7 +15,7 @@ bot = Bot(TOKEN)
 def welcome(update, context) -> None:
     update.message.reply_text(f"Hey {update.message.from_user.first_name}, Welcome to MegaMov\n"
                               f"A one platform place for all Movies")
-    update.message.reply_text("Start By searching a movie")
+    update.message.reply_text("Start by searching a movie")
 
 
 def find_movie(update, context):
@@ -88,3 +85,7 @@ def set_webhook():
         return "webhook setup ok"
     else:
         return "webhook setup failed"
+
+
+if __name__ == '__main__':
+    app.run()

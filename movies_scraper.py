@@ -29,7 +29,7 @@ def get_movie(query):
         f"{url_list[query]}").text, 'html.parser')
     if movie_page_link:
         title = movie_page_link.find("div", {'class': 'mvic-desc'}).h3.text
-        movie_details["title"] = title
+        movie_details["title"] = title.replace('mkvCinemas.mkv', ">>")
         img = movie_page_link.find("div", {'class': 'mvic-thumb'})['data-bg']
         movie_details["img"] = img
         links = movie_page_link.find_all(
@@ -41,4 +41,7 @@ def get_movie(query):
             link = response.json()
             final_links[f"{i.text}"] = link['shortenedUrl']
         movie_details["links"] = final_links
+        for key in list(final_links.keys()):
+            new_key = key.replace("mkvCinemas.mkv", "MegaMov")
+            final_links[new_key] = final_links.pop(key)
     return movie_details

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import os
 
 url_list = {}
-API = os.getenv("API")
+API = 'e97f8232ba51a0a2bd9cb53380ebfb71f0555014'
 
 
 def search_movies(query):
@@ -26,7 +26,7 @@ def search_movies(query):
 def get_movie(query):
     movie_details = {}
     movie_page_link = BeautifulSoup(requests.get(
-        f"{url_list[query]}").text, 'html5lib')
+        f"{url_list[query]}").text, 'html.parser')
     if movie_page_link:
         title = movie_page_link.find("div", {'class': 'mvic-desc'}).h3.text
         movie_details["title"] = title

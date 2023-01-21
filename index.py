@@ -8,7 +8,7 @@ from io import BytesIO
 import os
 
 TOKEN = os.getenv("TOKEN")
-URL = os.getenv("URL")
+URL = 'https://mega-mov.vercel.app'
 bot = Bot(TOKEN)
 
 

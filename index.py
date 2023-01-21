@@ -85,7 +85,3 @@ def set_webhook():
         return "webhook setup ok"
     else:
         return "webhook setup failed"
-
-
-if __name__ == '__main__':
-    app.run()

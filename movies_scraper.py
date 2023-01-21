@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+import os
 
 url_list = {}
-API = "e97f8232ba51a0a2bd9cb53380ebfb71f0555014"
+API = os.getenv("API")
 
 
 def search_movies(query):

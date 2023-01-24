@@ -16,9 +16,16 @@ def welcome(update, context) -> None:
     update.message.reply_text(f"Hey {update.message.from_user.first_name}, Welcome to MegaMov\n"
                               f"A one platform place for all Movies")
     update.message.reply_text("Start by searching a movie")
-    
+
+
 def trending(update, context) -> None:
-    update.message.reply_text("We are working on this feature..\nTo be updated soon")
+    update.message.reply_text(
+        "We are working on this feature..\nTo be updated soon")
+
+
+def usage(update, bug) -> None:
+    update.message.reply_text(
+        "Usage policy can be accessed through the link below:\nhttps://hrefly.com/Wsk")
 
 
 def find_movie(update, context):
@@ -62,6 +69,7 @@ def setup():
     dispatcher = Dispatcher(bot, update_queue, use_context=True)
     dispatcher.add_handler(CommandHandler('start', welcome))
     dispatcher.add_handler(CommandHandler('trending', trending))
+    dispatcher.add_handler(CommandHandler('usagepolicy', usage))
     dispatcher.add_handler(MessageHandler(Filters.text, find_movie))
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
     return dispatcher

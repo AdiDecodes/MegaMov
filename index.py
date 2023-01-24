@@ -14,8 +14,8 @@ bot = Bot(TOKEN)
 
 def welcome(update, context) -> None:
     update.message.reply_text(f"Hey {update.message.from_user.first_name}, Welcome to MegaMov\n"
-                              f"A one platform place for all Movies")
-    update.message.reply_text("Start by searching a movie")
+                              f"A one platform place for all content")
+    update.message.reply_text("Start by searching a content")
 
 
 def trending(update, context) -> None:
@@ -43,7 +43,7 @@ def find_movie(update, context):
             'Look what I\'ve found', reply_markup=reply_markup)
     else:
         search_results.edit_text(
-            'Sorry, No Results Found!\nCheck the Movie name you\'ve typed')
+            'Sorry, No Results Found!\nCheck the content name you\'ve typed')
 
 
 def movie_result(update, context) -> None:
@@ -51,17 +51,20 @@ def movie_result(update, context) -> None:
     s = get_movie(query.data)
     response = requests.get(s["img"])
     img = BytesIO(response.content)
-    query.message.reply_photo(photo=img, caption=f"🎥 {s['title']}")
     link = ""
     links = s["links"]
     for i in links:
-        link += "🎬" + i + "\n" + links[i] + "\n\n"
+        link += "🎬 " + i + "\n" + links[i] + "\n\n"
     caption = f"⚡ Fast Download Links :-\n\n{link}"
-    if len(caption) > 4095:
-        for x in range(0, len(caption), 4095):
-            query.message.reply_text(text=caption[x:x+4095])
+    if (link == ""):
+        query.message.reply_text(text="Requested content is unavailable!")
     else:
-        query.message.reply_text(text=caption)
+        query.message.reply_photo(photo=img, caption=f"🎥 {s['title']}")
+        if len(caption) > 4095:
+            for x in range(0, len(caption), 4095):
+                query.message.reply_text(text=caption[x:x+4095])
+        else:
+            query.message.reply_text(text=caption)
 
 
 def setup():

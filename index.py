@@ -25,7 +25,7 @@ def trending(update, context) -> None:
 
 def usage(update, bug) -> None:
     update.message.reply_text(
-        "Usage policy can be accessed through the link below:\nhttps://hrefly.com/Wsk")
+        "Usage policy can be accessed through the link below:\nhttps://hrefly.com/Wsk", disable_web_page_preview=True)
 
 
 def find_movie(update, context):
@@ -64,7 +64,8 @@ def movie_result(update, context) -> None:
             for x in range(0, len(caption), 4095):
                 query.message.reply_text(text=caption[x:x+4095])
         else:
-            query.message.reply_text(text=caption)
+            query.message.reply_text(
+                text=caption, disable_web_page_preview=True)
 
 
 def setup():

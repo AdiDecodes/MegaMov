@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-from cleantext import clean
-import emoji
 
 url_list = {}
 API = 'e97f8232ba51a0a2bd9cb53380ebfb71f0555014'
@@ -26,10 +24,6 @@ def search_movies(query):
     return movies_list
 
 
-# def give_emoji_free_text(text):
-#     return emoji.get_emoji_regexp().sub(r'', text.decode('utf8'))
-
-
 def get_movie(query):
     movie_details = {}
     movie_page_link = BeautifulSoup(requests.get(
@@ -37,7 +31,6 @@ def get_movie(query):
     if movie_page_link:
         title = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('title')
-        print(title)
         movie_details["title"] = title.replace("Download", "").strip()
         img = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('src')
@@ -58,7 +51,3 @@ def get_movie(query):
             new_key = key.replace("📥", "").strip()
             final_links[new_key] = final_links.pop(key)
     return movie_details
-
-
-# print(search_movies('Taaza Khabar'))
-# print(get_movie('link0'))

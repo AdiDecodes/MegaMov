@@ -31,12 +31,13 @@ def get_movie(query):
     if movie_page_link:
         title = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('title')
+        print(title)
         movie_details["title"] = title.replace("Download", "").strip()
         img = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('src')
         movie_details["img"] = img
         links = movie_page_link.find_all(
-            "a", {'class': 'maxbutton-2 maxbutton maxbutton-12'})
+            "a", {'class': 'maxbutton'})
         final_links = {}
         for i in links:
             url = f"https://urlshortx.com/api?api={API}&url={i['href']}"

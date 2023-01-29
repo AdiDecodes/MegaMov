@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+from cleantext import clean
+import emoji
 
 url_list = {}
 API = 'e97f8232ba51a0a2bd9cb53380ebfb71f0555014'
@@ -22,6 +24,10 @@ def search_movies(query):
         movies_list.append(movies_details)
         movies_details = {}
     return movies_list
+
+
+def give_emoji_free_text(text):
+    return emoji.get_emoji_regexp().sub(r'', text.decode('utf8'))
 
 
 def get_movie(query):
@@ -47,6 +53,9 @@ def get_movie(query):
         movie_details["links"] = final_links
         for key in list(final_links.keys()):
             new_key = key.replace("mkvCinemas.mkv", "MegaMov")
+            final_links[new_key] = final_links.pop(key)
+        for key in list(final_links.keys()):
+            new_key = key.replace("📥", "").strip()
             final_links[new_key] = final_links.pop(key)
     return movie_details
 

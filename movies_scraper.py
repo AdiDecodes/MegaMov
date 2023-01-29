@@ -26,8 +26,8 @@ def search_movies(query):
     return movies_list
 
 
-def give_emoji_free_text(text):
-    return emoji.get_emoji_regexp().sub(r'', text.decode('utf8'))
+# def give_emoji_free_text(text):
+#     return emoji.get_emoji_regexp().sub(r'', text.decode('utf8'))
 
 
 def get_movie(query):
@@ -60,5 +60,5 @@ def get_movie(query):
     return movie_details
 
 
-print(search_movies('Taaza Khabar'))
-print(get_movie('link0'))
+# print(search_movies('Taaza Khabar'))
+# print(get_movie('link0'))

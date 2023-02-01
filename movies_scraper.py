@@ -24,6 +24,11 @@ def search_movies(query):
     return movies_list
 
 
+def checkURL(url):
+    request = requests.get(url)
+    return (request.status_code)
+
+
 def get_movie(query):
     movie_details = {}
     movie_page_link = BeautifulSoup(requests.get(
@@ -35,7 +40,10 @@ def get_movie(query):
         movie_details["title"] = title.replace("Download", "").strip()
         img = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('src')
-        movie_details["img"] = img
+        if checkURL(img) != 200:
+            movie_details["img"] = "https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg"
+        else:
+            movie_details["img"] = img
         links = movie_page_link.find_all(
             "a", {'class': 'maxbutton'})
         final_links = {}

@@ -67,6 +67,9 @@ def get_movie(query):
         if flag:
             movie_details[
                 "Note"] = "Note: Please check the given URLS. They may not be working! (Content Recovered from Archives)"
+        else:
+            movie_details[
+                "Note"] = ""
         for key in list(final_links.keys()):
             new_key = key.replace("mkvCinemas.mkv", "MegaMov")
             final_links[new_key] = final_links.pop(key)

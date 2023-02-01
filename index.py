@@ -53,9 +53,12 @@ def movie_result(update, context) -> None:
     img = BytesIO(response.content)
     link = ""
     links = s["links"]
+    Note = s["Note"]
     for i in links:
         link += "🎬 " + i + "\n" + links[i] + "\n\n"
     caption = f"⚡ Fast Download Links :-\n\n{link}"
+    if Note != '':
+        caption = caption + '\n\n' + Note
     if (link == ""):
         query.message.reply_text(text="Requested content is unavailable!")
     else:

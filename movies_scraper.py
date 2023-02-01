@@ -9,8 +9,9 @@ API = 'e97f8232ba51a0a2bd9cb53380ebfb71f0555014'
 def search_movies(query):
     movies_list = []
     movies_details = {}
+    data = query
     website = BeautifulSoup(requests.get(
-        f"https://hdbollyhub.shop/?s={query.replace(' ', '+')}").text, "html.parser")
+        f"https://hdbollyhub.shop/?s={data.replace(' ', '+')}").text, "html.parser")
     movies = website.find_all(
         "a", {'class': 'simple-grid-grid-post-thumbnail-link'})
     for movie in movies:
@@ -29,20 +30,30 @@ def checkURL(url):
     return (request.status_code)
 
 
+def getImage(url):
+    def_url = 'https://www.google.com/search?site=&tbm=isch&source=hp&biw=1873&bih=990&'
+    search_url = def_url + 'q=' + url.replace(' ', '+')
+    imgdata = BeautifulSoup(requests.get(search_url).text, "html.parser")
+    img = imgdata.find('img', {'class': 'yWs4tf'})['src']
+    return img
+
+
 def get_movie(query):
+    flag = False
     movie_details = {}
     movie_page_link = BeautifulSoup(requests.get(
         f"{url_list[query]}").text, 'html.parser')
     if movie_page_link:
         title = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('title')
-        print(title)
         movie_details["title"] = title.replace("Download", "").strip()
         img = movie_page_link.find(
             "img", {'class': 'simple-grid-post-thumbnail-single-img wp-post-image'}).get('src')
         if checkURL(img) != 200:
-            movie_details["img"] = "https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg"
+            flag = True
+            movie_details["img"] = getImage(title)
         else:
+            flag = False
             movie_details["img"] = img
         links = movie_page_link.find_all(
             "a", {'class': 'maxbutton'})
@@ -53,6 +64,9 @@ def get_movie(query):
             link = response.json()
             final_links[f"{i.text}"] = link['shortenedUrl']
         movie_details["links"] = final_links
+        if flag:
+            movie_details[
+                "Note"] = "Note: Please check the given URLS. They may not be working! (Content Recovered from Archives)"
         for key in list(final_links.keys()):
             new_key = key.replace("mkvCinemas.mkv", "MegaMov")
             final_links[new_key] = final_links.pop(key)

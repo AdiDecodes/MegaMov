@@ -11,7 +11,7 @@ def search_movies(query):
     movies_details = {}
     data = query
     website = BeautifulSoup(requests.get(
-        f"https://hdbollyhub.shop/?s={data.replace(' ', '+')}").text, "html.parser")
+        f"https://hdbollyhub.bond/?s={data.replace(' ', '+')}").text, "html.parser")
     movies = website.find_all(
         "a", {'class': 'simple-grid-grid-post-thumbnail-link'})
     for movie in movies:

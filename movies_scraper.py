@@ -83,7 +83,7 @@ def get_movie(query):
 
 
 # def get_urls():
-#     url = "https://api.shareus.in/shortLink?token=bef1b0oOTge8ka6nLT9nd3evncB3&format=json&link=mylink.com"
+#     url = "https://api.shareus.in/shortLink?token=&format=json&link=mylink.com"
 #     response = requests.get(url).json()
 #     print(response['shortlink'])
 

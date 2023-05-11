@@ -1,9 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+from dotenv import load_dotenv
+load_dotenv('.env')
+
 
 url_list = {}
-API = 'e97f8232ba51a0a2bd9cb53380ebfb71f0555014'
+KEY = os.getenv("KEY")
+API = os.getenv("API")
 
 
 def search_movies(query):
@@ -59,10 +63,9 @@ def get_movie(query):
             "a", {'class': 'maxbutton'})
         final_links = {}
         for i in links:
-            url = f"https://urlshortx.com/api?api={API}&url={i['href']}"
-            response = requests.get(url)
-            link = response.json()
-            final_links[f"{i.text}"] = link['shortenedUrl']
+            url = f"https://api.shareus.in/shortLink?token={KEY}&format=json&link={i['href']}"
+            response = requests.get(url).json()
+            final_links[f"{i.text}"] = response['shortlink']
         movie_details["links"] = final_links
         if flag:
             movie_details[
@@ -77,3 +80,12 @@ def get_movie(query):
             new_key = key.replace("📥", "").strip()
             final_links[new_key] = final_links.pop(key)
     return movie_details
+
+
+# def get_urls():
+#     url = "https://api.shareus.in/shortLink?token=bef1b0oOTge8ka6nLT9nd3evncB3&format=json&link=mylink.com"
+#     response = requests.get(url).json()
+#     print(response['shortlink'])
+
+# print(search_movies("kisi ka bhai kisi ki jaan"))
+# print(get_movie("link0"))

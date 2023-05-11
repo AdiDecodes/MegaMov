@@ -6,8 +6,6 @@ import requests
 from queue import Queue
 from io import BytesIO
 import os
-from dotenv import load_dotenv
-load_dotenv('.env')
 
 TOKEN = os.getenv("TOKEN")
 URL = 'https://mega-mov.vercel.app'
